@@ -3,8 +3,6 @@
 
 // vim: ft=typescript
 
-// TODO: Extract into a lib and write a test to ensure formatting
-// is exactly as expected
 import { unified } from "npm:unified";
 import remarkParse from "npm:remark-parse";
 import remarkGfm from "npm:remark-gfm";
@@ -18,7 +16,12 @@ const main = async () => {
   const args = cmd.run();
 
   const inputText = Deno.readTextFileSync(args.file);
-  const formattedFile = await unified()
+  const formattedFile = await format(inputText);
+  Deno.writeTextFileSync(args.file, formattedFile);
+};
+
+export const format = async (src: string): Promise<string> => {
+  const result = await unified()
     .use(remarkParse, {})
     .use(remarkGfm)
     .use(remarkStringify, {
@@ -67,9 +70,9 @@ const main = async () => {
         },
       ],
     })
-    .process(inputText);
-  Deno.writeTextFileSync(args.file, formattedFile.toString());
-};
+    .process(src);
+  return result.toString();
+}
 
 if (import.meta.main) {
   main();

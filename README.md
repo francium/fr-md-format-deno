@@ -17,5 +17,8 @@ Make sure you have [Deno][deno-url] installed and copy `fr-md-format` to somewhe
 ## Usage
 
 ```txt
-$ fr-md-format <markdown file>
+$ fr-md-format.ts <markdown file>
 ```
+
+Note due to how Deno works, the `.ts` extension must be present on the file for
+Deno to work.
