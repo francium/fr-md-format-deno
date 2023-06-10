@@ -57,6 +57,11 @@ export const format = async (src: string): Promise<string> => {
           return defaultHandlers.link(node, parent, state, info);
         },
 
+        // The remarkGfm extension doesn't handle indeterminate checkboxes. Not
+        // sure if there's a way to override the extension's code, it's not a
+        // handler in the state.handlers, nor can it be overriden using the
+        // config passed to `remarkStringify`. So for now, this regex, while
+        // hacky, does the trick.
         list: (node, parent, state, info) => {
           const result = defaultHandlers.list(node, parent, state, info);
           return result.replaceAll(/^\s*- \\\[-\] /gm, "- [-] ");
