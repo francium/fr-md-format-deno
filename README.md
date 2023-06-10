@@ -22,3 +22,12 @@ $ fr-md-format.ts <markdown file>
 
 Note due to how Deno works, the `.ts` extension must be present on the file for
 Deno to work.
+
+
+## Development
+
+See [deno.jsonc](./deno.jsonc) for defined tasks and run with,
+
+```
+deno task <task name>
+```
