@@ -22,7 +22,7 @@ const main = async () => {
 };
 
 export const format = async (src: string): Promise<string> => {
-  const result = await unified()
+  const resultVFile = await unified()
     .use(remarkParse, {})
     .use(remarkGfm)
     .use(remarkStringify, {
@@ -54,7 +54,8 @@ export const format = async (src: string): Promise<string> => {
             }
           }
 
-          return defaultHandlers.link(node, parent, state, info);
+          const child = node.children[0];
+          return `[${child.value}](${node.url})`;
         },
 
         // The remarkGfm extension doesn't handle indeterminate checkboxes. Not
@@ -80,9 +81,33 @@ export const format = async (src: string): Promise<string> => {
         },
       ],
     })
-    .process(src);
-  return result.toString();
+    .process(src)
+
+  let result = resultVFile.toString();
+  result = processMailtoPrefixes(src, result);
+
+  return result;
 };
+
+const processMailtoPrefixes = (src: string, result: string): string => {
+  // This is a hacky way of removing the remarkGfm `mailto:` prefix behavior.
+  // Not sure if there's a way to configure it or override it to make it stop
+  // adding a `mailto:` prefix.
+  //
+  // If there's a already a 'mailto:' in the source, then don't try to remove
+  // the prefix
+
+  // Regex is stateful, can't reuse same instance
+  const mailtoPrefixRegex = () => /mailto:(?=[^\s@]*?@)/g;
+  if (mailtoPrefixRegex().test(src) && result.includes('mailto:mailto:')) {
+    result = result.replaceAll('mailto:mailto:', 'mailto:');
+  }
+  if (!mailtoPrefixRegex().test(src) && mailtoPrefixRegex().test(result)) {
+    result = result.replaceAll(mailtoPrefixRegex(), '');
+  }
+
+  return result;
+}
 
 if (import.meta.main) {
   main();

@@ -56,13 +56,24 @@ Another line of text
 
   {
     label: "urls don't get escaped",
-    input: `https://example.com/api?param=value&foo=bar`,
-    expected: `https://example.com/api?param=value&foo=bar\n`,
+    input: `https://example.com/api?param=value&foo=bar_buzz`,
+    expected: `https://example.com/api?param=value&foo=bar_buzz\n`,
   },
   {
     label: "urls in a list don't get escaped",
     input: `- https://example.com/api?param=value&foo=bar`,
     expected: `- https://example.com/api?param=value&foo=bar\n`,
+  },
+
+  {
+    label: "email does not get prefixed with a 'mailto:' prefix",
+    input: `- bob@example.com`,
+    expected: `- bob@example.com\n`,
+  },
+  {
+    label: "explicitly included 'mailto:' prefix does not get removed",
+    input: `- mailto:bob@example.com`,
+    expected: `- mailto:bob@example.com\n`,
   },
 
   {
