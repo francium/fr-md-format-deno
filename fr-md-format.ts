@@ -37,7 +37,7 @@ export const format = async (src: string): Promise<string> => {
         // not appear to be a way to remove the `&` unsafe entry from the
         // `unsafe` config this plugin accepts. So instead, this tries to mimic
         // the default handler but does not apply any escaping.
-        link: (node, _parent, _state, _info) => {
+        link: (node, parent, state, info) => {
           if (node.children.length === 1) {
             const child = node.children[0];
             const cp = child.position;
@@ -54,8 +54,7 @@ export const format = async (src: string): Promise<string> => {
             }
           }
 
-          const child = node.children[0];
-          return `[${child.value}](${node.url})`;
+          return defaultHandlers.link(node, parent, state, info);
         },
 
         list: (node, parent, state, info) => {
