@@ -8,8 +8,8 @@ be interest in this plugin.
 
 ## Installation
 
-Make sure you have [Deno][deno-url] installed and copy `fr-md-format` to somewhere in your
-`$PATH`.
+Make sure you have [Deno][deno-url] installed and copy `fr-md-format.ts` to
+somewhere in your `$PATH`.
 
 [deno-url]: https://deno.com/runtime
 
