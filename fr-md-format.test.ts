@@ -91,6 +91,24 @@ Another line of text
 [bar]: example.com/bar
 `,
   },
+
+  {
+    label: "indeterminate checkboxes",
+    input: `
+- [ ] foo
+- [-] bar
+  - [-] bar 2
+  - [x] bar 3
+- [x] qux
+`,
+    expected: `\
+- [ ] foo
+- [-] bar
+  - [-] bar 2
+  - [x] bar 3
+- [x] qux
+`,
+  },
 ];
 
 testCases.forEach(({label, input, expected}) => {
