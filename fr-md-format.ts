@@ -5,7 +5,7 @@
 
 import { unified } from "npm:unified";
 import remarkParse from "npm:remark-parse";
-import {handle as defaultHandlers} from "npm:mdast-util-to-markdown/lib/handle/index.js";
+import { handle as defaultHandlers } from "npm:mdast-util-to-markdown/lib/handle/index.js";
 import remarkGfm from "npm:remark-gfm";
 import remarkStringify from "npm:remark-stringify";
 import { Command, string } from "https://deno.land/x/clay@v0.2.5/mod.ts";
@@ -60,7 +60,7 @@ export const format = async (src: string): Promise<string> => {
 
         list: (node, parent, state, info) => {
           const result = defaultHandlers.list(node, parent, state, info);
-          return result.replaceAll(/^\s*- \\\[-\] /gm, '- [-] ')
+          return result.replaceAll(/^\s*- \\\[-\] /gm, "- [-] ");
         },
       },
       join: [
@@ -78,7 +78,7 @@ export const format = async (src: string): Promise<string> => {
     })
     .process(src);
   return result.toString();
-}
+};
 
 if (import.meta.main) {
   main();
