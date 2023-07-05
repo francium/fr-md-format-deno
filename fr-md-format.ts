@@ -33,11 +33,9 @@ export const format = async (src: string): Promise<string> => {
       tightDefinitions: true,
       resourceLink: false,
       handlers: {
-        // By default the `link` handler will escape `&` in URLs. There does
-        // not appear to be a way to remove the `&` unsafe entry from the
-        // `unsafe` config this plugin accepts. So instead, this tries to mimic
-        // the default handler but does not apply any escaping.
         link: (node, parent, state, info) => {
+          // If the text is just a raw literal link ("https://example.com"),
+          // just return it as is without any formatting
           if (node.children.length === 1) {
             const child = node.children[0];
             const cp = child.position;
@@ -54,8 +52,14 @@ export const format = async (src: string): Promise<string> => {
             }
           }
 
-          const child = node.children[0];
-          return `[${child.value}](${node.url})`;
+          // By default the `link` handler will escape `&` in URLs. There does
+          // not appear to be a way to remove the `&` unsafe entry from the
+          // `unsafe` config this plugin accepts. So instead, this tries to
+          // mimic the default handler but does not apply any escaping.
+          const defaultOutput = defaultHandlers.link(node, parent, state, info);
+          // Just extract the text between the square brackets ("[...]")
+          const label = defaultOutput.split("](")[0].slice(1);
+          return `[${label}](${node.url})`;
         },
 
         // The remarkGfm extension doesn't handle indeterminate checkboxes. Not

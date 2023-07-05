@@ -120,6 +120,18 @@ Another line of text
 - [x] qux
 `,
   },
+
+  {
+    label: "code in headings",
+    input: "# The quick `brown`/`fox` jumps over `the` lazy dog\n",
+    expected: "# The quick `brown`/`fox` jumps over `the` lazy dog\n",
+  },
+
+  {
+    label: "code in links",
+    input: "[the `quick` brown `fox`](https://example.com)\n",
+    expected: "[the `quick` brown `fox`](https://example.com)\n",
+  }
 ];
 
 testCases.forEach(({label, input, expected}) => {
