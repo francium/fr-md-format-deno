@@ -85,7 +85,7 @@ export const format = async (src: string): Promise<string> => {
         },
       ],
     })
-    .process(src)
+    .process(src);
 
   let result = resultVFile.toString();
   result = processMailtoPrefixes(src, result);
@@ -103,15 +103,15 @@ const processMailtoPrefixes = (src: string, result: string): string => {
 
   // Regex is stateful, can't reuse same instance
   const mailtoPrefixRegex = () => /mailto:(?=[^\s@]*?@)/g;
-  if (mailtoPrefixRegex().test(src) && result.includes('mailto:mailto:')) {
-    result = result.replaceAll('mailto:mailto:', 'mailto:');
+  if (mailtoPrefixRegex().test(src) && result.includes("mailto:mailto:")) {
+    result = result.replaceAll("mailto:mailto:", "mailto:");
   }
   if (!mailtoPrefixRegex().test(src) && mailtoPrefixRegex().test(result)) {
-    result = result.replaceAll(mailtoPrefixRegex(), '');
+    result = result.replaceAll(mailtoPrefixRegex(), "");
   }
 
   return result;
-}
+};
 
 if (import.meta.main) {
   main();

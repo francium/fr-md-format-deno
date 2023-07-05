@@ -131,10 +131,10 @@ Another line of text
     label: "code in links",
     input: "[the `quick` brown `fox`](https://example.com)\n",
     expected: "[the `quick` brown `fox`](https://example.com)\n",
-  }
+  },
 ];
 
-testCases.forEach(({label, input, expected}) => {
+testCases.forEach(({ label, input, expected }) => {
   Deno.test(label, async () => {
     const output = await format(input);
     assertEquals(output, expected);
