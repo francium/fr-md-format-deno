@@ -1,9 +1,7 @@
 # fr-md-format
 
-A custom markdown formatter. Written as a standalone script in Deno.
-
-Formats markdown the way I prefer. I made this for personal use, so you may not
-be interest in this plugin.
+A custom markdown formatter that formats markdown according to my preferences.
+Written as a standalone script in Deno.
 
 
 ## Installation
